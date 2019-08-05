@@ -66,6 +66,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 const packageJsonWebpack = appPackageJson.webpack || {};
 const packageJsonAlias = packageJsonWebpack.alias || {};
 const packageJsonEntry = packageJsonWebpack.entry || [];
+const packageJsonEslintLoader = packageJsonWebpack.eslint || {};
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -371,6 +372,7 @@ module.exports = function(webpackEnv) {
             },
           ],
           include: paths.appSrc,
+          ...packageJsonEslintLoader,
         },
         {
           // "oneOf" will traverse all following loaders until one will
