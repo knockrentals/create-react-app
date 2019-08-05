@@ -60,6 +60,13 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
+/**
+ * Webpack additions from package json.
+ */
+const packageJsonWebpack = appPackageJson.webpack || {};
+const packageJsonAlias = packageJsonWebpack.alias || {};
+const packageJsonEntry = packageJsonWebpack.entry || [];
+
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
@@ -160,6 +167,7 @@ module.exports = function(webpackEnv) {
         require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
       paths.appIndexJs,
+      ...packageJsonEntry,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
@@ -292,6 +300,7 @@ module.exports = function(webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        ...packageJsonAlias,
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
