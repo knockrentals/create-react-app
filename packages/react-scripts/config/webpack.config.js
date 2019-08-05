@@ -67,6 +67,9 @@ const packageJsonWebpack = appPackageJson.webpack || {};
 const packageJsonAlias = packageJsonWebpack.alias || {};
 const packageJsonEntry = packageJsonWebpack.entry || [];
 const packageJsonEslintLoader = packageJsonWebpack.eslint || {};
+if (packageJsonEslintLoader.test != null) {
+  packageJsonEslintLoader.test = new RegExp(packageJsonEslintLoader.test);
+}
 const packageJsonTerserOptions = packageJsonWebpack.terserOptions || {};
 
 // toggle for analyzing webpack bundle
