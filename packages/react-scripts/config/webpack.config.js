@@ -62,6 +62,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 /**
  * Webpack additions from package json.
+ * NOTE: this is a custom addition for knockrentals.
  */
 const packageJsonWebpack = appPackageJson.webpack || {};
 const packageJsonAlias = packageJsonWebpack.alias || {};
@@ -545,6 +546,7 @@ module.exports = function(webpackEnv) {
               ),
             },
             // Adds support for html files.
+            // NOTE: this is a custom addition for knockrentals
             {
               test: /\.(html)$/,
               use: {
