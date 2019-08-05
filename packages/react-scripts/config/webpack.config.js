@@ -33,6 +33,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const eslint = require('eslint');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
@@ -60,14 +61,17 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-/**
- * Webpack additions from package json.
- * NOTE: this is a custom addition for knockrentals.
- */
+//Webpack additions from package json.
+// NOTE: this is a custom addition for knockrentals.
 const packageJsonWebpack = appPackageJson.webpack || {};
 const packageJsonAlias = packageJsonWebpack.alias || {};
 const packageJsonEntry = packageJsonWebpack.entry || [];
 const packageJsonEslintLoader = packageJsonWebpack.eslint || {};
+const packageJsonTerserOptions = packageJsonWebpack.terserOptions || {};
+
+// toggle for analyzing webpack bundle
+// NOTE: this is a custom addition for knockrentals.
+const analyzeBundle = process.env.ANALYZE_BUNDLE === 'true' ? true : false;
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -243,6 +247,7 @@ module.exports = function(webpackEnv) {
               // https://github.com/facebook/create-react-app/issues/2488
               ascii_only: true,
             },
+            ...packageJsonTerserOptions,
           },
           // Use multi-process parallel running to improve the build speed
           // Default number of concurrent runs: os.cpus().length - 1
@@ -713,6 +718,7 @@ module.exports = function(webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      analyzeBundle && new BundleAnalyzerPlugin()
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.
