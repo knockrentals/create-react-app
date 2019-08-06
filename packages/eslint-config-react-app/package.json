@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-react-app",
+  "name": "@knock-rentals/eslint-config-react-app",
   "version": "4.0.1",
   "description": "ESLint configuration used by Create React App",
   "repository": {
