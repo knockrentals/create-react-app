@@ -86,6 +86,10 @@ if (packageJsonEslintLoader.test != null) {
 const packageJsonTerserOptions = packageJsonWebpack.terserOptions || {};
 const packageJsonAllowedFiles = packageJsonWebpack.allowedFiles || [];
 
+packageJsonAllowedFiles.forEach((filePath, i) => {
+  packageJsonAllowedFiles[i] = `${paths.appPath}/${filePath}`;
+});
+
 // toggle for analyzing webpack bundle
 // NOTE: this is a custom addition for knockrentals.
 const analyzeBundle = process.env.ANALYZE_BUNDLE === 'true' ? true : false;
