@@ -84,6 +84,7 @@ if (packageJsonEslintLoader.test != null) {
   packageJsonEslintLoader.test = new RegExp(packageJsonEslintLoader.test);
 }
 const packageJsonTerserOptions = packageJsonWebpack.terserOptions || {};
+const packageJsonAllowedFiles = packageJsonWebpack.allowedFiles || [];
 
 // toggle for analyzing webpack bundle
 // NOTE: this is a custom addition for knockrentals.
@@ -334,7 +335,7 @@ module.exports = function(webpackEnv) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson, ...packageJsonAllowedFiles]),
       ],
     },
     resolveLoader: {
