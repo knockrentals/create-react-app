@@ -65,7 +65,20 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 // NOTE: this is a custom addition for knockrentals.
 const packageJsonWebpack = appPackageJson.webpack || {};
 const packageJsonAlias = packageJsonWebpack.alias || {};
+
+
+const aliasKeys = Object.keys(packageJsonAlias);
+
+aliasKeys.forEach(key => {
+  packageJsonAlias[key] = `${paths.appPath}/${packageJsonAlias[key]}`;
+});
+
 const packageJsonEntry = packageJsonWebpack.entry || [];
+
+packageJsonEntry.forEach((entry, i) => {
+  packageJsonEntry[i] = `${paths.appPath}/${entry}`;
+});
+
 const packageJsonEslintLoader = packageJsonWebpack.eslint || {};
 if (packageJsonEslintLoader.test != null) {
   packageJsonEslintLoader.test = new RegExp(packageJsonEslintLoader.test);
