@@ -578,7 +578,6 @@ module.exports = function(webpackEnv) {
               use: {
                 loader: 'html-loader',
                 options: {
-                  name: 'static/media/[name].[hash:8].[ext]',
                   attrs: [':data-src']
                 }
               }
