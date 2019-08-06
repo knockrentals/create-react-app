@@ -22,6 +22,8 @@ if (!NODE_ENV) {
   );
 }
 
+const ENV_FILE_NAME=process.env.ENV_FILE_NAME;
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
@@ -33,6 +35,11 @@ var dotenvFiles = [
   paths.dotenv,
 ].filter(Boolean);
 
+if (ENV_FILE_NAME) {
+  dotenvFiles = [
+    ENV_FILE_NAME,
+  ];
+}
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.  Variable expansion is supported in .env files.
